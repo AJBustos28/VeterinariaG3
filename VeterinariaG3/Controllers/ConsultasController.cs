@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL;
 
-namespace MVC.Controllers
+namespace VeterinariaG3.Controllers
 {
     public class ConsultasController : Controller
     {
