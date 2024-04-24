@@ -18,4 +18,4 @@ namespace Veterinaria.DAL
 
         public virtual ICollection<ApplicationUser> Usuarios { get; set; }
     }
-}
+} 

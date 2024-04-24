@@ -69,7 +69,7 @@ namespace Veterinaria.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MascotaId")
+                    b.Property<int?>("MascotaIdMascotas")
                         .HasColumnType("int");
 
                     b.Property<string>("Medicamentos")
@@ -91,7 +91,7 @@ namespace Veterinaria.DAL.Migrations
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("MascotaId");
+                    b.HasIndex("MascotaIdMascotas");
 
                     b.HasIndex("VeterinarioId");
 
@@ -190,11 +190,9 @@ namespace Veterinaria.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Veterinaria.DAL.Mascota", "Mascota")
+                    b.HasOne("Veterinaria.DAL.Mascota", null)
                         .WithMany("Consultas")
-                        .HasForeignKey("MascotaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MascotaIdMascotas");
 
                     b.HasOne("Veterinaria.DAL.Veterinario", "Veterinario")
                         .WithMany("Consulta")
@@ -203,8 +201,6 @@ namespace Veterinaria.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Cliente");
-
-                    b.Navigation("Mascota");
 
                     b.Navigation("Veterinario");
                 });

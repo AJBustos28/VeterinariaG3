@@ -36,9 +36,5 @@ namespace Veterinaria.DAL
         public int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
 
-        //Relacion con Mascota
-        [ForeignKey("MascotaId")]
-        public int MascotaId { get; set; }
-        public virtual Mascota Mascota { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Veterinaria.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class inicial : Migration
+    public partial class intento : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -85,7 +85,7 @@ namespace Veterinaria.DAL.Migrations
                     Medicamentos = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     VeterinarioId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    MascotaId = table.Column<int>(type: "int", nullable: false)
+                    MascotaIdMascotas = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -97,11 +97,10 @@ namespace Veterinaria.DAL.Migrations
                         principalColumn: "IdCliente",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Consulta_Mascotas_MascotaId",
-                        column: x => x.MascotaId,
+                        name: "FK_Consulta_Mascotas_MascotaIdMascotas",
+                        column: x => x.MascotaIdMascotas,
                         principalTable: "Mascotas",
-                        principalColumn: "IdMascotas",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdMascotas");
                     table.ForeignKey(
                         name: "FK_Consulta_Veterinario_VeterinarioId",
                         column: x => x.VeterinarioId,
@@ -116,9 +115,9 @@ namespace Veterinaria.DAL.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consulta_MascotaId",
+                name: "IX_Consulta_MascotaIdMascotas",
                 table: "Consulta",
-                column: "MascotaId");
+                column: "MascotaIdMascotas");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consulta_VeterinarioId",
