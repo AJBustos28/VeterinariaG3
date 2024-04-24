@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Veterinaria.DAL;
 
@@ -11,9 +9,9 @@ namespace VeterinariaG3.Controllers
 {
     public class ConsultasController : Controller
     {
-        private readonly ProyectoDbContexct _context;
+        private readonly VeterinariaDbContext _context;
 
-        public ConsultasController(ProyectoDbContexct context)
+        public ConsultasController(VeterinariaDbContext context)
         {
             _context = context;
         }
@@ -21,21 +19,23 @@ namespace VeterinariaG3.Controllers
         // GET: Consultas
         public async Task<IActionResult> Index()
         {
-              return _context.Consultas != null ? 
-                          View(await _context.Consultas.ToListAsync()) :
-                          Problem("Entity set 'ProyectoDbContexct.Consultas'  is null.");
+            if (_context.Consulta == null)
+            {
+                return Problem("Entity set 'VeterinariaDbContext.Consulta' is null.");
+            }
+
+            return View(await _context.Consulta.ToListAsync());
         }
 
         // GET: Consultas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Consultas == null)
+            if (id == null || _context.Consulta == null)
             {
                 return NotFound();
             }
 
-            var consulta = await _context.Consultas
-                .FirstOrDefaultAsync(m => m.IdConsulta == id);
+            var consulta = await _context.Consulta.FirstOrDefaultAsync(m => m.IdConsulta == id);
             if (consulta == null)
             {
                 return NotFound();
@@ -51,8 +51,6 @@ namespace VeterinariaG3.Controllers
         }
 
         // POST: Consultas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdConsulta,DateTimeValue,Motivo,Diagnostico,Tratamiento,Medicamentos")] Consulta consulta)
@@ -69,12 +67,12 @@ namespace VeterinariaG3.Controllers
         // GET: Consultas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Consultas == null)
+            if (id == null || _context.Consulta == null)
             {
                 return NotFound();
             }
 
-            var consulta = await _context.Consultas.FindAsync(id);
+            var consulta = await _context.Consulta.FindAsync(id);
             if (consulta == null)
             {
                 return NotFound();
@@ -83,8 +81,6 @@ namespace VeterinariaG3.Controllers
         }
 
         // POST: Consultas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdConsulta,DateTimeValue,Motivo,Diagnostico,Tratamiento,Medicamentos")] Consulta consulta)
@@ -120,13 +116,12 @@ namespace VeterinariaG3.Controllers
         // GET: Consultas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Consultas == null)
+            if (id == null || _context.Consulta == null)
             {
                 return NotFound();
             }
 
-            var consulta = await _context.Consultas
-                .FirstOrDefaultAsync(m => m.IdConsulta == id);
+            var consulta = await _context.Consulta.FirstOrDefaultAsync(m => m.IdConsulta == id);
             if (consulta == null)
             {
                 return NotFound();
@@ -140,23 +135,24 @@ namespace VeterinariaG3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Consultas == null)
+            if (_context.Consulta == null)
             {
-                return Problem("Entity set 'ProyectoDbContexct.Consultas'  is null.");
+                return Problem("Entity set 'VeterinariaDbContext.Consulta' is null.");
             }
-            var consulta = await _context.Consultas.FindAsync(id);
+
+            var consulta = await _context.Consulta.FindAsync(id);
             if (consulta != null)
             {
-                _context.Consultas.Remove(consulta);
+                _context.Consulta.Remove(consulta);
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool ConsultaExists(int id)
         {
-          return (_context.Consultas?.Any(e => e.IdConsulta == id)).GetValueOrDefault();
+            return _context.Consulta.Any(e => e.IdConsulta == id);
         }
     }
 }

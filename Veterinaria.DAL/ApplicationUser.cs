@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Veterinaria.DAL
 {
@@ -13,8 +9,8 @@ namespace Veterinaria.DAL
     {
         [Required]
         [MaxLength(100)]
-        public string Nombre  { get; set; }
-        
+        public string Nombre { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string PrimerApellido { get; set; }
@@ -22,9 +18,19 @@ namespace Veterinaria.DAL
         [Required]
         [MaxLength(100)]
         public string SegundoApellido { get; set; }
-        
+
         [Required]
-        [DefaultValue(1)]
         public int Estado { get; set; }
+
+        [Required]
+        public DateTime UltimaConexion { get; set; }
+
+        [Required]
+        public string Imagen { get; set; }
+
+        // Relación con el rol
+        [ForeignKey("Rol")]
+        public int RolId { get; set; }
+        public virtual Rol Rol { get; set; }
     }
 }
