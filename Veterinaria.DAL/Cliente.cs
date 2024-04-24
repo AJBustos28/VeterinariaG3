@@ -21,5 +21,9 @@ namespace Veterinaria.DAL
 
         [Required]
         public string Correo { get; set; }
+
+        public ICollection<Mascota> Mascotas { get; set;} = new List<Mascota>();
+
+        public ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
     }
 }

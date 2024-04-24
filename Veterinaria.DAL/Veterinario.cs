@@ -8,7 +8,7 @@ namespace Veterinaria.DAL
     {
         [Key]
         [Required]
-        public int IdMascota { get; set; }
+        public int IdVeterinario { get; set; }
 
         [Required]
         public string Nombre { get; set; }
@@ -20,6 +20,8 @@ namespace Veterinaria.DAL
         public string Telefono { get; set; }
 
         [Required]
-        public string Genero { get; set; }
+        public string Correo { get; set; }
+
+        public ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
     }
 }

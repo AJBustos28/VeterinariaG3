@@ -14,6 +14,9 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<AuthDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<VeterinariaDbContext>(options =>  options.UseSqlServer("name=ConnVeterinariaDB").LogTo(Console.WriteLine, LogLevel.Information));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
