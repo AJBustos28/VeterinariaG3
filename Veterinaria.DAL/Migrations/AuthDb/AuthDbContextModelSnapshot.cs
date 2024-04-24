@@ -177,10 +177,6 @@ namespace Veterinaria.DAL.Migrations.AuthDb
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<string>("Imagen")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 

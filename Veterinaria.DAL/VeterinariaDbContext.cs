@@ -14,9 +14,6 @@ namespace Veterinaria.DAL
 
             optionsBuilder.UseSqlServer();
         }
-
-        public virtual DbSet<Veterinario> Veterinario { get; set; }
-        public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<Mascota> Mascotas { get; set; }
         public virtual DbSet<Consulta> Consulta { get; set; }
     }

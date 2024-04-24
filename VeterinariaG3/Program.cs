@@ -7,21 +7,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-var ConnectionStringAuth = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+builder.Services.AddDbContext<VeterinariaDbContext>(options => options.UseSqlServer("name=DefaultConnection"));
 
+// IDENTITY
+var ConnectionStringAuth = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(ConnectionStringAuth));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDbContext<VeterinariaDbContext>(options => options.UseSqlServer("name=DefaultConnection"));
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultUI();
 
-builder.Services.AddRazorPages();
 
+builder.Services.AddRazorPages();
 
 builder.Services.AddControllersWithViews();
 
@@ -46,6 +46,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

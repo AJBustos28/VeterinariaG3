@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Veterinaria.DAL
 {
+    [Table("AspNetUse")]
     public class ApplicationUser : IdentityUser
     {
         [Required]
@@ -25,7 +26,6 @@ namespace Veterinaria.DAL
         [Required]
         public DateTime UltimaConexion { get; set; }
 
-        [Required]
         public string Imagen { get; set; }
 
         // Relación con el rol

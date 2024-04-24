@@ -12,8 +12,8 @@ using Veterinaria.DAL;
 namespace Veterinaria.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaDbContext))]
-    [Migration("20240424204314_intento")]
-    partial class intento
+    [Migration("20240424222549_cambioDBparaAUTH2")]
+    partial class cambioDBparaAUTH2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,33 +25,82 @@ namespace Veterinaria.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Veterinaria.DAL.Cliente", b =>
+            modelBuilder.Entity("Veterinaria.DAL.ApplicationUser", b =>
                 {
-                    b.Property<int>("IdCliente")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdCliente"));
-
-                    b.Property<string>("Correo")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Direccion")
-                        .IsRequired()
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telefono")
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PrimerApellido")
                         .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdCliente");
+                    b.Property<string>("SegundoApellido")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.ToTable("Clientes");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UltimaConexion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RolId");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Veterinaria.DAL.Consulta", b =>
@@ -62,8 +111,9 @@ namespace Veterinaria.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdConsulta"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<string>("ConsultaCreacionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateTimeValue")
                         .HasColumnType("datetime2");
@@ -87,16 +137,11 @@ namespace Veterinaria.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VeterinarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("IdConsulta");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ConsultaCreacionId");
 
                     b.HasIndex("MascotaIdMascotas");
-
-                    b.HasIndex("VeterinarioId");
 
                     b.ToTable("Consulta");
                 });
@@ -109,8 +154,9 @@ namespace Veterinaria.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMascotas"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<string>("CreacionMascotaId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Dueño")
                         .IsRequired()
@@ -151,45 +197,44 @@ namespace Veterinaria.DAL.Migrations
 
                     b.HasKey("IdMascotas");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("CreacionMascotaId");
 
                     b.ToTable("Mascotas");
                 });
 
-            modelBuilder.Entity("Veterinaria.DAL.Veterinario", b =>
+            modelBuilder.Entity("Veterinaria.DAL.Rol", b =>
                 {
-                    b.Property<int>("IdVeterinario")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdVeterinario"));
-
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Especialidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.HasKey("IdVeterinario");
+                    b.ToTable("Rol");
+                });
 
-                    b.ToTable("Veterinario");
+            modelBuilder.Entity("Veterinaria.DAL.ApplicationUser", b =>
+                {
+                    b.HasOne("Veterinaria.DAL.Rol", "Rol")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("Veterinaria.DAL.Consulta", b =>
                 {
-                    b.HasOne("Veterinaria.DAL.Cliente", "Cliente")
-                        .WithMany("Consulta")
-                        .HasForeignKey("ClienteId")
+                    b.HasOne("Veterinaria.DAL.ApplicationUser", "ConsultaCreacion")
+                        .WithMany()
+                        .HasForeignKey("ConsultaCreacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -197,33 +242,18 @@ namespace Veterinaria.DAL.Migrations
                         .WithMany("Consultas")
                         .HasForeignKey("MascotaIdMascotas");
 
-                    b.HasOne("Veterinaria.DAL.Veterinario", "Veterinario")
-                        .WithMany("Consulta")
-                        .HasForeignKey("VeterinarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Veterinario");
+                    b.Navigation("ConsultaCreacion");
                 });
 
             modelBuilder.Entity("Veterinaria.DAL.Mascota", b =>
                 {
-                    b.HasOne("Veterinaria.DAL.Cliente", "Cliente")
-                        .WithMany("Mascotas")
-                        .HasForeignKey("ClienteId")
+                    b.HasOne("Veterinaria.DAL.ApplicationUser", "CreacionMascota")
+                        .WithMany()
+                        .HasForeignKey("CreacionMascotaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
-                });
-
-            modelBuilder.Entity("Veterinaria.DAL.Cliente", b =>
-                {
-                    b.Navigation("Consulta");
-
-                    b.Navigation("Mascotas");
+                    b.Navigation("CreacionMascota");
                 });
 
             modelBuilder.Entity("Veterinaria.DAL.Mascota", b =>
@@ -231,9 +261,9 @@ namespace Veterinaria.DAL.Migrations
                     b.Navigation("Consultas");
                 });
 
-            modelBuilder.Entity("Veterinaria.DAL.Veterinario", b =>
+            modelBuilder.Entity("Veterinaria.DAL.Rol", b =>
                 {
-                    b.Navigation("Consulta");
+                    b.Navigation("Usuarios");
                 });
 #pragma warning restore 612, 618
         }

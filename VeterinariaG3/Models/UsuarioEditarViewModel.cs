@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Veterinaria.DAL;
 using System.ComponentModel.DataAnnotations;
 
 namespace VeterinariaG3.ViewModels

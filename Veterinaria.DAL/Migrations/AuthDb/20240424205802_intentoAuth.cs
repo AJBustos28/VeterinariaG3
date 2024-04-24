@@ -214,10 +214,7 @@ namespace Veterinaria.DAL.Migrations.AuthDb
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_RolId",
-                table: "AspNetUsers",
-                column: "RolId");
+            
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

@@ -26,15 +26,11 @@ namespace Veterinaria.DAL
         [Required]
         public string Medicamentos { get; set; }
 
-        // Relación con Veterinario
-        [ForeignKey("Veterinario")]
-        public int VeterinarioId { get; set; }
-        public virtual Veterinario Veterinario { get; set; }
+        public string ConsultaCreacionId { get; set; }
 
-        // Relación con Cliente
-        [ForeignKey("Cliente")]
-        public int ClienteId { get; set; }
-        public virtual Cliente Cliente { get; set; }
+        public ApplicationUser? ConsultaCreacion { get; set; }
+
+       
 
     }
 }

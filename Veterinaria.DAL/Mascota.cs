@@ -40,10 +40,9 @@ namespace Veterinaria.DAL
         [Required]
         public DateTime FechaCreacion { get; set; }
 
-        //Relacion con Cliente
-        [ForeignKey("ClienteId")]
-        public int ClienteId { get; set; }
-        public virtual Cliente Cliente { get; set; }
+        public string CreacionMascotaId { get; set; }
+
+        public ApplicationUser? CreacionMascota { get; set; }
 
         public ICollection<Consulta> Consultas { get; set; } = new List<Consulta>();
     }

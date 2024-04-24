@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Veterinaria.DAL;
 
@@ -11,9 +12,11 @@ using Veterinaria.DAL;
 namespace Veterinaria.DAL.Migrations
 {
     [DbContext(typeof(VeterinariaDbContext))]
-    partial class VeterinariaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424212352_cambioDBparaAUTH")]
+    partial class cambioDBparaAUTH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,6 +44,10 @@ namespace Veterinaria.DAL.Migrations
 
                     b.Property<int>("Estado")
                         .HasColumnType("int");
+
+                    b.Property<string>("Imagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
