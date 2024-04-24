@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Veterinaria.DAL.Consulta>
+
+@{
+    ViewData["Title"] = "Listado de Consultas";
+}
+
+<h1>Listado de Consultas</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Crear Nueva</a>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.DateTimeValue)</th>
+                <th>@Html.DisplayNameFor(model => model.Motivo)</th>
+                <th>@Html.DisplayNameFor(model => model.Diagnostico)</th>
+                <th>@Html.DisplayNameFor(model => model.Tratamiento)</th>
+                <th>@Html.DisplayNameFor(model => model.Medicamentos)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.DateTimeValue)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Motivo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Diagnostico)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Tratamiento)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Medicamentos)</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.IdConsulta">Editar</a> |
+                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.IdConsulta">Detalles</a> |
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.IdConsulta">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
