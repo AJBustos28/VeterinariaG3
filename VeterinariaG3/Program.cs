@@ -5,15 +5,24 @@ using Veterinaria.DAL;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var ConnectionStringAuth = builder.Configuration.GetConnectionString("AuthDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthDbContextConnection' not found.");
+
+
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseSqlServer(ConnectionString));
+    options.UseSqlServer(ConnectionStringAuth));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDbContext<VeterinariaDbContext>(options => options.UseSqlServer("name=DefaultConnection"));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AuthDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultUI();
+
+builder.Services.AddRazorPages();
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -30,6 +39,7 @@ else
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
 
